@@ -17,6 +17,35 @@ for (let i = 0; i < shapes.length; i++) {
     }
 }
 
+function initProjectRevealOnScroll() {
+    const projects = document.querySelectorAll('.project')
+
+    if (!projects.length) {
+        return
+    }
+
+    if (!('IntersectionObserver' in window)) {
+        projects.forEach((project) => project.classList.add('project--visible'))
+        return
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+                return
+            }
+
+            entry.target.classList.add('project--visible')
+            observer.unobserve(entry.target)
+        })
+    }, {
+        threshold: 0.35,
+        rootMargin: '0px 0px -12% 0px'
+    })
+
+    projects.forEach((project) => observer.observe(project))
+}
+
 function toggleContrast() {
     contrastToggle = !contrastToggle;
     document.body.classList.toggle('dark-theme', contrastToggle)
@@ -47,6 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('.modal__exit')
     const loading = document.querySelector('.modal__overlay--loading')
     const success = document.querySelector('.modal__overlay--success')
+    const landingPage = document.querySelector('#landing-page')
+
+    if (landingPage) {
+        landingPage.addEventListener('touchmove', (event) => {
+            if (!event.touches.length) {
+                return
+            }
+
+            moveBackground(event.touches[0])
+        }, { passive: true })
+    }
+
+    initProjectRevealOnScroll()
 
     if (!closeButton || !loading || !success) {
         return
