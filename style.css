@@ -536,15 +536,11 @@ PROJECTS
     height: 350px;
     object-fit: cover;
     display: block;
-    transition: all 300ms ease;
+    transition: transform 500ms ease, filter 500ms ease;
+    will-change: transform, filter;
 }
 
 .project:hover .project__img {
-    transform: scale(1.07);
-    filter: blur(5px);
-}
-
-.project.project--visible .project__img {
     transform: scale(1.07);
     filter: blur(5px);
 }
@@ -564,14 +560,11 @@ PROJECTS
     height: 100%;
     background-color: #1c1d25;
     opacity: 0;
-    transition: opacity 450ms ease;
+    transition: opacity 550ms ease;
+    will-change: opacity;
 }
 
 .project__wrapper:hover .project__wrapper--bg {
-    opacity: 0.7;
-}
-
-.project.project--visible .project__wrapper--bg {
     opacity: 0.7;
 }
 
@@ -579,21 +572,16 @@ PROJECTS
     position: absolute;
     top: 50%;
     left: 90px;
-    transform: translateY(100%);
+    transform: translateY(-50%);
     color: whitesmoke;
     max-width: 550px;
     opacity: 0;
-    transition: opacity 450ms ease, transform 450ms ease;
+    transition: opacity 450ms ease;
+    will-change: opacity;
 }
 
 .project__wrapper:hover .project__description {
     opacity: 1;
-    transform: translateY(-50%);
-}
-
-.project.project--visible .project__description {
-    opacity: 1;
-    transform: translateY(-50%);
 }
 
 .project__description--title {

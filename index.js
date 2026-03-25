@@ -17,35 +17,6 @@ for (let i = 0; i < shapes.length; i++) {
     }
 }
 
-function initProjectRevealOnScroll() {
-    const projects = document.querySelectorAll('.project')
-
-    if (!projects.length) {
-        return
-    }
-
-    if (!('IntersectionObserver' in window)) {
-        projects.forEach((project) => project.classList.add('project--visible'))
-        return
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-                return
-            }
-
-            entry.target.classList.add('project--visible')
-            observer.unobserve(entry.target)
-        })
-    }, {
-        threshold: 0.35,
-        rootMargin: '0px 0px -12% 0px'
-    })
-
-    projects.forEach((project) => observer.observe(project))
-}
-
 function toggleContrast() {
     contrastToggle = !contrastToggle;
     document.body.classList.toggle('dark-theme', contrastToggle)
@@ -87,8 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
             moveBackground(event.touches[0])
         }, { passive: true })
     }
-
-    initProjectRevealOnScroll()
 
     if (!closeButton || !loading || !success) {
         return
